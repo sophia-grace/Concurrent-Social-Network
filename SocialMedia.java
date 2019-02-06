@@ -21,17 +21,25 @@ import java.util.*;
 
 public class SocialMedia extends Thread	{
   List<String> lst = Collections.synchronizedList(new ArrayList<String>());
-/*	public synchronized(?) void post(String s){...}
-	public synchronized(?) String view(){...}
+	public synchronized void post(String s, long id) {
+    System.out.println(id + " says: " + s + ".");
+  }
+
+	public synchronized String view(long id) {
+    System.out.println(id + " is viewing...");
+  }
 	public void run() {
     for (int i = 0; i < 100; i++) {
-      if (int)(Math.random() % 2 == 0) {
-			   post();
+      if ((int) Math.random() % 2 == 0) {
+         System.out.println("Posting...");
+			   post(this.post, this.uniqueId());
       }
 		  else {
-			   view();
+         System.out.println("Viewing...")
+			   view(this.uniqueId());
 	    }
-  }			// invoking threads */
+    }
+  }
 	public static void main(String[] args) {
     int numOfUsers = Integer.parseInt(args[0]);
 
