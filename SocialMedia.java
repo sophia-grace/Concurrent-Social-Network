@@ -25,27 +25,20 @@ import java.util.*;
 public class SocialMedia extends Thread	{
   static List<String> lst = Collections.synchronizedList(new ArrayList<String>());
 
-  public synchronized long uniqueId() {
-    return this.getId();
+  public synchronized String uniqueId() {
+    return Long.toString(this.getId());
   }
 
-  public synchronized int position(String search) {
-    return lst.indexOf(search);
-  }
-
-	public synchronized void post(long id) {
+	public synchronized void post(String id) {
     System.out.println("Posting...");
-    lst.add(Long.toString(id));
-    System.out.println("list len:" + lst.size());
-    System.out.println("User " + id + " at location " + lst.indexOf(Long.toString(id)) + ".\n");
+    lst.add(id);
+    System.out.println("User " + id + " at location " + lst.indexOf(id) + ".\n");
   }
 
-	public synchronized void view(long id) {
+	public synchronized void view(String id) {
     System.out.println("User " + id + " is viewing...");
-    System.out.flush();
     if(lst.size() == 0) {
       System.out.println("{Empty newsfeed}\n");
-      System.out.flush();
     }
     else {
       int count = 0;
