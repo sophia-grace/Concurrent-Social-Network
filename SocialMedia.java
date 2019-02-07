@@ -11,6 +11,9 @@ import java.util.*;
 // resource for getting unique id of each thread:
 // https://javahungry.blogspot.com/2016/01/how-to-get-thread-id-in-java-with-example.html
 
+// error:
+// https://www.journaldev.com/378/java-util-concurrentmodificationexception
+
 
 /*public class User extends Thread {
   public User(String str) { //
@@ -20,26 +23,58 @@ import java.util.*;
 
 
 public class SocialMedia extends Thread	{
-  List<String> lst = Collections.synchronizedList(new ArrayList<String>());
-	public synchronized void post(String s, long id) {
-    System.out.println(id + " says: " + s + ".");
+  static List<String> lst = Collections.synchronizedList(new ArrayList<String>());
+
+  public synchronized long uniqueId() {
+    return this.getId();
   }
 
-	public synchronized String view(long id) {
-    System.out.println(id + " is viewing...");
+  public synchronized int position(String search) {
+    return lst.indexOf(search);
   }
-	public void run() {
-    for (int i = 0; i < 100; i++) {
-      if ((int) Math.random() % 2 == 0) {
-         System.out.println("Posting...");
-			   post(this.post, this.uniqueId());
+
+	public synchronized void post(int pos, long id) {
+    System.out.println("Posting...");
+    lst.add(Long.toString(id));
+    System.out.println("User " + id + " at location " + pos + ".\n");
+  }
+
+	public synchronized void view(long id) {
+    System.out.println("User " + id + " is viewing...");
+    System.out.flush();
+    if(lst.size() == 0) {
+      System.out.println("{Empty newsfeed}\n");
+      System.out.flush();
+    }
+    else {
+      int count = 0;
+      Iterator i = lst.iterator();
+      System.out.println("{");
+      while(i.hasNext() && count < 6) {
+        System.out.println(i.next());
       }
+      System.out.println("}\n");
+    }
+  }
+
+	public synchronized void run() {
+    for (int i = 0; i < 5; i++) {
+      try { // delay
+        sleep((int)(Math.random() * 1000));
+      } catch (InterruptedException e) {}
+
+      // Posting
+      if ((int) (Math.random() * 100) % 2 == 0) {
+			   post(position(Long.toString(this.getId())), this.uniqueId());
+      }
+      // Viewing
 		  else {
-         System.out.println("Viewing...")
 			   view(this.uniqueId());
 	    }
     }
   }
+
+
 	public static void main(String[] args) {
     int numOfUsers = Integer.parseInt(args[0]);
 
