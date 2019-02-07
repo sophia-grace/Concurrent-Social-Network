@@ -16,7 +16,10 @@ import java.util.*;
 
 
 public class SocialMedia extends Thread	{
-  static List<String> lst = Collections.synchronizedList(new ArrayList<String>());
+  // all the users
+  static List<String> userList = Collections.synchronizedList(new ArrayList<String>());
+  // the posts from all users
+  static List<String> newsFeed = Collections.synchronizedList(new ArrayList<String>());
 
   public synchronized String uniqueId() {
     return Long.toString(this.getId());
@@ -24,18 +27,21 @@ public class SocialMedia extends Thread	{
 
 	public synchronized void post(String id) {
     System.out.println("Posting...");
-    lst.add(id);
-    System.out.println("User " + id + " at location " + lst.indexOf(id) + ".\n");
+    if(userList.indexOf(id) == -1) {
+      userList.add(id);
+    }
+    newsFeed.add("User " + id + " at location " + userList.indexOf(id));
+    System.out.println("User " + id + " at location " + userList.indexOf(id) + ".\n");
   }
 
 	public synchronized void view(String id) {
     System.out.println("User " + id + " is viewing...");
-    if(lst.size() == 0) {
+    if(newsFeed.size() == 0) {
       System.out.println("{Empty newsfeed}\n");
     }
     else {
       int count = 0;
-      Iterator i = lst.iterator();
+      Iterator i = newsFeed.iterator();
       System.out.println("{");
       while(i.hasNext() && count < 6) {
         System.out.println(i.next());
