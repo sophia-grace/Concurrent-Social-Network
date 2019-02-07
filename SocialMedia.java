@@ -33,10 +33,11 @@ public class SocialMedia extends Thread	{
     return lst.indexOf(search);
   }
 
-	public synchronized void post(int pos, long id) {
+	public synchronized void post(long id) {
     System.out.println("Posting...");
     lst.add(Long.toString(id));
-    System.out.println("User " + id + " at location " + pos + ".\n");
+    System.out.println("list len:" + lst.size());
+    System.out.println("User " + id + " at location " + lst.indexOf(Long.toString(id)) + ".\n");
   }
 
 	public synchronized void view(long id) {
@@ -65,7 +66,7 @@ public class SocialMedia extends Thread	{
 
       // Posting
       if ((int) (Math.random() * 100) % 2 == 0) {
-			   post(position(Long.toString(this.getId())), this.uniqueId());
+			   post(this.uniqueId());
       }
       // Viewing
 		  else {
