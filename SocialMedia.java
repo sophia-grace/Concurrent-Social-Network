@@ -11,15 +11,8 @@ import java.util.*;
 // resource for getting unique id of each thread:
 // https://javahungry.blogspot.com/2016/01/how-to-get-thread-id-in-java-with-example.html
 
-// error:
+// error: need to change from synchronizedList!
 // https://www.journaldev.com/378/java-util-concurrentmodificationexception
-
-
-/*public class User extends Thread {
-  public User(String str) { //
-    super(str);
-  }
-} */
 
 
 public class SocialMedia extends Thread	{
@@ -51,7 +44,7 @@ public class SocialMedia extends Thread	{
     }
   }
 
-	public synchronized void run() {
+	public void run() {
     for (int i = 0; i < 5; i++) {
       try { // delay
         sleep((int)(Math.random() * 1000));
@@ -72,8 +65,8 @@ public class SocialMedia extends Thread	{
 	public static void main(String[] args) {
     int numOfUsers = Integer.parseInt(args[0]);
 
-    if(numOfUsers < 2) {
-      throw new IllegalArgumentException("There must be at least 2 users in this social network.");
+    if(numOfUsers <= 2) {
+      throw new IllegalArgumentException("There must be at least 3 users in this social network.");
     }
     else {
       for(int i = 0; i < numOfUsers; i++) {
