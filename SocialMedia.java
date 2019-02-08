@@ -6,6 +6,7 @@
 */
 
 import java.util.*;
+import java.util.concurrent.*;
 
 
 // resource for getting unique id of each thread:
@@ -18,8 +19,13 @@ import java.util.*;
 public class SocialMedia extends Thread	{
   // all the users
   static List<String> userList = Collections.synchronizedList(new ArrayList<String>());
+
   // the posts from all users
-  static List<String> newsFeed = Collections.synchronizedList(new ArrayList<String>());
+  // using a Deque that is thread safe as described here:
+  // https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ConcurrentLinkedDeque.html
+  // and as recommended here:
+  // https://dzone.com/articles/why-future-generations-will
+  static ConcurrentLinkedDeque<String> newsFeed = new ConcurrentLinkedDeque<String>();
 
   public synchronized String uniqueId() {
     return Long.toString(this.getId());
@@ -28,10 +34,10 @@ public class SocialMedia extends Thread	{
 	public synchronized void post(String id) {
     System.out.println("Posting...");
     if(userList.indexOf(id) == -1) {
-      userList.add(id);
+      userList.add(id); // add to the front of the deque
     }
-    newsFeed.add("User " + id + " at location " + userList.indexOf(id));
-    System.out.println("User " + id + " at location " + userList.indexOf(id) + ".\n");
+    newsFeed.addFirst("User " + id + " at location " + userList.indexOf(id));
+    System.out.println("User " + id + " at location " + userList.indexOf(id) + "\n");
   }
 
 	public synchronized void view(String id) {
@@ -45,13 +51,14 @@ public class SocialMedia extends Thread	{
       System.out.println("{");
       while(i.hasNext() && count < 6) {
         System.out.println(i.next());
+        count += 1;
       }
       System.out.println("}\n");
     }
   }
 
 	public void run() {
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 100; i++) {
       try { // delay
         sleep((int)(Math.random() * 1000));
       } catch (InterruptedException e) {}
