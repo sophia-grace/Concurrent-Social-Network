@@ -24,7 +24,6 @@ public class User extends Thread {
     }
     SocialMedia.newsFeed.addFirst("User " + id + " at location " + userList.indexOf(id)
                                  + " says: " + random((int)((Math.random() + 1) * 4)));
-  //  System.out.println("User " + id + " at location " + userList.indexOf(id) + "\n");
     System.out.println(SocialMedia.newsFeed.getFirst());
   }
 
