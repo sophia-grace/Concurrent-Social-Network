@@ -17,14 +17,14 @@ public class User extends Thread {
     return Long.toString(this.getId());
   }
 
-  public synchronized void post(String id) {
+  public void post(String id) {
     System.out.println("Posting...");
     if(userList.indexOf(id) == -1) {
       userList.add(id); // add to the front of the deque
     }
     SocialMedia.newsFeed.addFirst("User " + id + " at location " + userList.indexOf(id)
                                  + " says: " + random((int)((Math.random() + 1) * 4)));
-    System.out.println(SocialMedia.newsFeed.getFirst());
+    System.out.println(SocialMedia.newsFeed.getFirst() + "\n");
   }
 
   public synchronized String random(int len) {
@@ -36,10 +36,9 @@ public class User extends Thread {
             result.append(alpha.charAt(index));
         }
         return result.toString();
-      //  return "hi";
     }
 
-  public synchronized void view(String id) {
+  public void view(String id) {
     System.out.println("User " + id + " is viewing...");
     if(SocialMedia.newsFeed.size() == 0) {
       System.out.println("{Empty newsfeed}\n");

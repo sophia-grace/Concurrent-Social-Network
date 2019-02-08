@@ -20,7 +20,7 @@ public class SocialMedia extends User	{
   static ConcurrentLinkedDeque<String> newsFeed = new ConcurrentLinkedDeque<String>();
 
 	public void run() {
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 5; i++) {
       try { // delay
         sleep((int)(Math.random() * 1000));
       } catch (InterruptedException e) {}
