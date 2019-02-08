@@ -8,6 +8,7 @@
 import java.util.*;
 import java.util.concurrent.*;
 
+
 public class User extends Thread {
   // all the users
   static List<String> userList = Collections.synchronizedList(new ArrayList<String>());
@@ -21,9 +22,23 @@ public class User extends Thread {
     if(userList.indexOf(id) == -1) {
       userList.add(id); // add to the front of the deque
     }
-    SocialMedia.newsFeed.addFirst("User " + id + " at location " + userList.indexOf(id));
-    System.out.println("User " + id + " at location " + userList.indexOf(id) + "\n");
+    SocialMedia.newsFeed.addFirst("User " + id + " at location " + userList.indexOf(id)
+                                 + " says: " + random((int)((Math.random() + 1) * 4)));
+  //  System.out.println("User " + id + " at location " + userList.indexOf(id) + "\n");
+    System.out.println(SocialMedia.newsFeed.getFirst());
   }
+
+  public synchronized String random(int len) {
+        String alpha = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+        StringBuilder result = new StringBuilder();
+        Random rnd = new Random();
+        while (result.length() < len) { // length of the random string
+            int index = (int) (rnd.nextFloat() * alpha.length()); // get a random letter
+            result.append(alpha.charAt(index));
+        }
+        return result.toString();
+      //  return "hi";
+    }
 
   public synchronized void view(String id) {
     System.out.println("User " + id + " is viewing...");
