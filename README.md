@@ -11,15 +11,17 @@ Description:
 Files:
 
 1. SocialMedia.java
+
         Description: The social media simulation using concurrency. Gets the
                      number of users, starts them, and randomly decides their actions.
                      Prints user actions to the console.
 
 2. User.java
+
         Description: The User class for the Social Media simulation. Implements
                      posting and viewing functionalities for the users. Generates
                      a random String for each post.
-                     
+
 
       NOTE: The SocialMedia class is a subtype of the User class, and the
             User class is a subtype of the Thread class. As follows:
