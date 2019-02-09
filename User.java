@@ -1,7 +1,8 @@
 /* Name: Sophia Trump
    File: User.java
-   Description: The User class for the Social Media simulation. "Users" can
-                either post or view.
+   Description: The User class for the Social Media simulation. Implements
+                posting and viewing functionalities for the users. Generates
+                a random String for each post.
    Date: 17 Feb 2019
 */
 

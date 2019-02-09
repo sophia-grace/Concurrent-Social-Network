@@ -1,7 +1,7 @@
 /* Name: Sophia Trump
    File: SocialMedia.java
    Description: The social media simulation using concurrency. Gets the
-                number of users, starts them, and decides their actions.
+                number of users, starts them, and randomly decides their actions.
                 User actions are printed to the console.
    Date: 17 Feb 2019
 */
