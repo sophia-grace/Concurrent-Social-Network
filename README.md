@@ -43,8 +43,8 @@ From the command line, run
 
 Then,
 
-            java SocialMedia <number-of-users>
+            java SocialMedia <number of users>
 
-where <number-of-users> is the number of users you would like
-to simulate. Please note that <number-of-users> must be greater
+where <number of users> is the number of users you would like
+to simulate. Please note that <number of users> must be greater
 than 2.
