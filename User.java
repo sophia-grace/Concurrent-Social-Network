@@ -10,8 +10,6 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class User extends Thread {
-  // all the users
-  static List<String> userList = Collections.synchronizedList(new ArrayList<String>());
 
   // resource for getting unique id of each thread:
   // https://javahungry.blogspot.com/2016/01/how-to-get-thread-id-in-java-with-example.html
@@ -21,15 +19,12 @@ public class User extends Thread {
 
   public void post(String id) {
     System.out.println("Posting...");
-    if(userList.indexOf(id) == -1) { // check if user is already recorded
-      userList.add(id); // add to the front of the deque
-    }
-    SocialMedia.newsFeed.addFirst("User " + id + " at location " + userList.indexOf(id)
+    SocialMedia.newsFeed.addFirst("User " + id + " at location " + SocialMedia.newsFeed.size()
                                  + " says: " + random((int)((Math.random() + 1) * 4))); // add the post to the news feed
     System.out.println(SocialMedia.newsFeed.getFirst() + "\n"); // output to the console
   } // post()
 
-  public synchronized String random(int len) { // generates a random String
+  public String random(int len) { // generates a random String
         String alpha = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
 
         // using StringBuffer as it is thread safe as indicated here:
